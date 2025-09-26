@@ -1,4 +1,9 @@
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
 export default function RideCard({ ride, onJoin, isJoining = false }) {
+  const { auth } = useContext(AuthContext);
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
       weekday: 'short',
@@ -12,11 +17,17 @@ export default function RideCard({ ride, onJoin, isJoining = false }) {
     switch (mode?.toLowerCase()) {
       case 'train': return '🚆';
       case 'bus': return '🚌';
-      case 'car': return '🚗';
+      case 'auto': return '🛺';
+      case 'cab': return '🚖';
       case 'flight': return '✈️';
+      case 'car': return '🚗';
       default: return '🚗';
     }
   };
+
+  // ✅ Determine role of current user
+  const isCreator = ride.userId?._id?.toString() === auth?.user?.id;
+  const hasJoined = ride.participants?.some((p) => p._id?.toString() === auth?.user?.id);
 
   return (
     <div className="card-hover p-6 animate-fade-in">
@@ -66,16 +77,28 @@ export default function RideCard({ ride, onJoin, isJoining = false }) {
         👥 {ride.participants?.length || 0} joined
       </p>
 
-      {/* Action Button */}
-      {onJoin && (
-        <button
-          onClick={() => onJoin(ride)}
-          disabled={isJoining}
-          className="btn btn-primary w-full mt-2"
-        >
-          {isJoining ? 'Joining...' : 'Join Ride'}
-        </button>
-      )}
+      {/* Action Section */}
+      <div className="mt-3">
+        {isCreator ? (
+          <span className="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-full">
+            You are the creator
+          </span>
+        ) : hasJoined ? (
+          <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+            Already Joined
+          </span>
+        ) : (
+          onJoin && (
+            <button
+              onClick={() => onJoin(ride)}
+              disabled={isJoining}
+              className="btn btn-primary w-full"
+            >
+              {isJoining ? 'Joining...' : 'Join Ride'}
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 }

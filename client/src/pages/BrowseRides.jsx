@@ -47,13 +47,22 @@ export default function BrowseRides() {
       });
 
       if (res.ok) {
-        const updatedRide = await res.json();
-        alert('Joined successfully!');
-        navigate('/ride-details', { state: { ride: updatedRide } });
-      } else {
-        const data = await res.json();
-        alert(data.message || 'Error joining ride');
-      }
+  const updatedRide = await res.json();
+  alert('Joined successfully!');
+
+  navigate('/ride-details', {
+    state: {
+      ride: updatedRide,
+      isJoined:
+        updatedRide.userId._id.toString() === auth.user.id ||   // creator
+        updatedRide.participants.some((p) => p._id === auth.user.id), // participant
+    },
+  });
+} else {
+  const data = await res.json();
+  alert(data.message || 'Error joining ride');
+}
+
     } catch (error) {
       console.error('Error joining ride:', error);
       alert('Failed to join ride. Please try again.');

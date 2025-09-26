@@ -6,7 +6,7 @@ import { sendJoinNotification } from '../utils/sendMail.js';
 
 export const postRide = async (req, res) => {
   try {
-    const ride = new RidePost({ ...req.body, userId: req.user.id });
+    const ride = new RidePost({ ...req.body, userId: req.user.id ,participants: [req.user.id],});
     await ride.save();
     // Populate the userId field before sending response
     await ride.populate('userId', 'name email');
