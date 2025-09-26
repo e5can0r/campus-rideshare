@@ -2,6 +2,8 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import io from 'socket.io-client';
 import { AuthContext } from '../context/AuthContext';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function ChatRoom({ rideId }) {
   const { auth } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
@@ -11,12 +13,12 @@ export default function ChatRoom({ rideId }) {
 
   useEffect(() => {
     // Create socket connection per component instance
-    socketRef.current = io('http://localhost:5000');
+    socketRef.current = io(API_BASE_URL);
 
     socketRef.current.emit('join_room', rideId);
      
     // Fetch past messages
-    fetch(`http://localhost:5000/api/messages/${rideId}`)
+    fetch(`${API_BASE_URL}/api/messages/${rideId}`)
     .then(res => res.json())
     .then(data => setMessages(data))
     .catch(err => console.error('Failed to load messages:', err));

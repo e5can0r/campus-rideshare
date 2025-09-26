@@ -3,6 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function PostRide() {
   const { user } = useContext(AuthContext);
   const [form, setForm] = useState({
@@ -34,7 +36,7 @@ export default function PostRide() {
     setSuccess('');
     
     try {
-      const res = await fetch('http://localhost:5000/api/rides', {
+      const res = await fetch(`${API_BASE_URL}/api/rides`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

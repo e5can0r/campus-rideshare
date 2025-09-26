@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
   const [form, setForm] = useState({ email: '', password: '' });
@@ -18,15 +20,15 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      
+
       if (res.ok) {
         setAuth({ token: data.token, user: data.user });
         navigate('/browse');

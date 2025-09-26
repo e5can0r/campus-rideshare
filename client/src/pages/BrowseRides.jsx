@@ -4,6 +4,8 @@ import RideCard from '../components/RideCard';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function BrowseRides() {
   const [rides, setRides] = useState([]);
   const [filters, setFilters] = useState({ originCity: '', travelDate: '', transportMode: '' });
@@ -17,7 +19,7 @@ export default function BrowseRides() {
       setLoading(true);
       try {
         let query = new URLSearchParams(filters).toString();
-        const res = await fetch(`http://localhost:5000/api/rides?${query}`);
+        const res = await fetch(`${API_BASE_URL}/api/rides?${query}`);
         const data = await res.json();
         setRides(data);
       } catch (error) {
@@ -39,7 +41,7 @@ export default function BrowseRides() {
 
     setJoiningRideId(ride._id);
     try {
-      const res = await fetch(`http://localhost:5000/api/rides/${ride._id}/join`, {
+      const res = await fetch(`${API_BASE_URL}/api/rides/${ride._id}/join`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${auth.token}`,

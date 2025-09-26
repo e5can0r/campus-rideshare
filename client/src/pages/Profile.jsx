@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import EditRideForm from '../components/EditRideForm';
 import Spinner from '../components/Spinner';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function Profile() {
   const { auth, logout } = useContext(AuthContext);
   const [createdRides, setCreatedRides] = useState([]);
@@ -16,7 +18,7 @@ export default function Profile() {
   // Fetch created rides
   const fetchCreatedRides = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/rides/created', {
+      const res = await fetch(`${API_BASE_URL}/api/rides/created`, {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
       if (!res.ok) {
@@ -33,7 +35,7 @@ export default function Profile() {
   // Fetch joined rides
   const fetchJoinedRides = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/rides/joined`, {
+      const res = await fetch(`${API_BASE_URL}/api/rides/joined`, {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
       if (!res.ok) {
@@ -61,7 +63,7 @@ export default function Profile() {
   // Delete ride
   const handleDelete = async (rideId) => {
     try {
-      await fetch(`http://localhost:5000/api/rides/${rideId}`, {
+      await fetch(`${API_BASE_URL}/api/rides/${rideId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${auth.token}` },
       });
@@ -74,7 +76,7 @@ export default function Profile() {
   // Save edited ride
   const handleSaveEdit = async (updatedRide) => {
     try {
-      await fetch(`http://localhost:5000/api/rides/${updatedRide._id}`, {
+      await fetch(`${API_BASE_URL}/api/rides/${updatedRide._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
