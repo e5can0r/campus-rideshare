@@ -3,8 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function PostRide() {
   const { user } = useContext(AuthContext);
   const [form, setForm] = useState({

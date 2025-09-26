@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);

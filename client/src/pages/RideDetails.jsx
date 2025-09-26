@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function RideDetails() {
   const location = useLocation();
   const { auth } = useContext(AuthContext);

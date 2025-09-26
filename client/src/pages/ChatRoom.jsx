@@ -2,8 +2,7 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import io from 'socket.io-client';
 import { AuthContext } from '../context/AuthContext';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function ChatRoom({ rideId }) {
   const { auth } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);

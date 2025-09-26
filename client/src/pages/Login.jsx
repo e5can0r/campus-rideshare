@@ -2,8 +2,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
   const [form, setForm] = useState({ email: '', password: '' });

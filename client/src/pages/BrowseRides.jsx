@@ -4,8 +4,7 @@ import RideCard from '../components/RideCard';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import { API_BASE_URL } from './config';
 export default function BrowseRides() {
   const [rides, setRides] = useState([]);
   const [filters, setFilters] = useState({ originCity: '', travelDate: '', transportMode: '' });
